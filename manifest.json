@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+
+  "name": "Memo",
+  "description": "簡易メモです",
+  "version": "1.0",
+  
+  "browser_action": {
+    //"default_icon": "",//なんか画像
+    "default_popup": "memoIndex.html",
+    "default_title": "Memo"
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+  ]
+}
