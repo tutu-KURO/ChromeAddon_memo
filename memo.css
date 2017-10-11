@@ -1,3 +1,24 @@
-.textarea{
-  resize: both;
+#textarea{
+  min-width: 400px;
+  min-height: 220px;
+
+  line-height: 20px;
+  height: 30px;
+
+  background:rgb(255, 246, 211) -webkit-gradient(
+    linear,
+    left top, left bottom,
+    from(rgba(0, 0, 0, 0)),
+    color-stop(0.96, rgba(0, 0, 0, 0)),
+    color-stop(0.98, rgba(0, 0, 0, 0.5)),
+    to(rgba(0, 0, 0, 0))
+    );
+  background-size: auto 2em;
+  font-size: 1rem;
+  line-height: 2rem;
+  overflow: hidden;
+}
+#valueCount{
+  text-align: right;
+  font-size: 150%;
 }
