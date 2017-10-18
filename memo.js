@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded",function(){
   const textarea = document.getElementById("textarea")
   const valueCount = document.getElementById("valueCount")
-
+  const md = document.getElementById("md")
   
   chrome.storage.sync.get("key", function (value) {
     textarea.value = value.key;
@@ -15,32 +15,40 @@ document.addEventListener("DOMContentLoaded",function(){
 
   textarea.addEventListener("keyup", function() {
     saveChanges();
-      let count = this.value.replace(/\r?\n/g,"").length
+      let count = this.value.replace(/\s/g,"").length
       valueCount.innerHTML  = count + " 文字"
   },false)
 
-  textarea.addEventListener("keyup",function(event){
-    console.lof(scrollHeight)
+  function mdChange (){
+    location.href ="md.html"
+  }
 
-    console.lof(event.target.style.scrollHeight)
 
-    console.lof()
+
+  // textarea.addEventListener("keypress",function(event){
+
+  //   if( event.keyCode === 13 ) { 
+  //     splitByLine = function() {
+  //       let text  = document.getElementById('textarea').value.replace(/\r\n|\r/g, "\n");
+  //       let lines = text.split( '\n' );
+  //       let outArray = new Array();
+  //       for(let i = 0;i < lines.length;i++ ){
+  //         // 空行は無視する
+  //         if(lines[i] == ''){
+  //           continue;
+  //         }
+  //         outArray.push( lines[i] );
+  //       }
+  //       return outArray;
+  //     }
+  
+  //     console.log(splitByLine())
+  //     console.log(splitByLine().length)
+      
     
-    if(event.target.scrollHeight > event.target.offsetHeight){
-      event.target.style.height = event.target.scrollHeight + "rem";
-    } else {
-      let hight ,lineHeight;
-      while (true){
-        height = Number(event.target.style.height.split("rem")[0]);
-        lineHeight = Number(event.target.style.scrollHeight.split("rem")[0]);
-        event.target.style.height = height - lineHeight + "rem";
-        if(event.target.scrollHeight > event.target.offsetHeight){
-          event.target.style.height = event.target.scrollHeight + "rem";
-          break;
-        }        
-      }
-    }
-  })
+  //   }
+
+  // })
 
   
 

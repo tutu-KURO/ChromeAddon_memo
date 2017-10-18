@@ -6,10 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script type="text/javascript" src="memo.js"> </script>
   <link rel="stylesheet" type="text/css" href="memo.css">
-  <title>Document</title>
+  <title>Memo</title>
 </head>
 <body>
   <textarea id="textarea"></textarea>
   <div id="valueCount"></div>
+  <div id='output' v-html='input | marked'></div>
+  <a href="md.html">Mark Down</a>
 </body>
 </html>

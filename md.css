@@ -1,0 +1,41 @@
+#editor{
+  min-width: 400px;
+  min-height: 220px;
+}
+*, *:before, *:after {
+  box-sizing: border-box; 
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  color: #444;
+  background-color: hsl(0, 0%, 96%);
+}
+h1 {
+  font-size: 1.8rem;
+}
+
+#input, #output {
+  display: block;
+  position: absolute;
+  top: 0px;
+  width: 50vw;
+  height: 100vh;
+  padding: 20px;
+  outline: none;
+  border: none;
+}
+
+#input {
+  left: 0px;
+  border-right: 1px solid #eee;
+}
+#output {
+  right: 0px;
+}
+
+ul {
+  padding: 1rem;
+  margin: 1rem;
+}

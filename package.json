@@ -1,0 +1,23 @@
+{
+  "name": "memo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "memo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tutu-KURO/ChromeAddon_memo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tutu-KURO/ChromeAddon_memo/issues"
+  },
+  "homepage": "https://github.com/tutu-KURO/ChromeAddon_memo#readme",
+  "dependencies": {
+    "marked": "^0.3.6",
+    "vue": "^2.5.2"
+  }
+}
