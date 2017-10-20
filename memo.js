@@ -21,36 +21,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
   function mdChange (){
     location.href ="md.html"
-  }
-
-
-
-  // textarea.addEventListener("keypress",function(event){
-
-  //   if( event.keyCode === 13 ) { 
-  //     splitByLine = function() {
-  //       let text  = document.getElementById('textarea').value.replace(/\r\n|\r/g, "\n");
-  //       let lines = text.split( '\n' );
-  //       let outArray = new Array();
-  //       for(let i = 0;i < lines.length;i++ ){
-  //         // 空行は無視する
-  //         if(lines[i] == ''){
-  //           continue;
-  //         }
-  //         outArray.push( lines[i] );
-  //       }
-  //       return outArray;
-  //     }
-  
-  //     console.log(splitByLine())
-  //     console.log(splitByLine().length)
-      
-    
-  //   }
-
-  // })
-
-  
+  }  
 
 
 })

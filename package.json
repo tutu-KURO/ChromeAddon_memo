@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/tutu-KURO/ChromeAddon_memo#readme",
   "dependencies": {
+    "markdown-it": "^8.4.0",
     "marked": "^0.3.6",
     "vue": "^2.5.2"
   }

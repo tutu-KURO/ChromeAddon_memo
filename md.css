@@ -1,4 +1,4 @@
-#editor{
+/* #editor{
   min-width: 400px;
   min-height: 220px;
 }
@@ -38,4 +38,18 @@ h1 {
 ul {
   padding: 1rem;
   margin: 1rem;
+} */
+
+table{
+  width: 100%;
+}
+
+table tr td{
+  margin: 0 10px;
+  width: 50%;
+  vertical-align: top;
+}
+
+table tr td textarea{
+  width: 95%;
 }
