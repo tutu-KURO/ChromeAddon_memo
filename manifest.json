@@ -7,7 +7,7 @@
   
   "browser_action": {
     //"default_icon": "",//なんか画像
-    "default_popup": "memoIndex.html",
+    "default_popup": "memo.html",
     "default_title": "Memo"
   },
   "permissions": [

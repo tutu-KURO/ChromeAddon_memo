@@ -4,14 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <script type="text/javascript" src="color.js"> </script>
+  <!-- <script type="text/javascript" src="c.js"> </script> -->
+  
+  
   <script type="text/javascript" src="memo.js"> </script>
+  
+
   <link rel="stylesheet" type="text/css" href="memo.css">
   <title>Memo</title>
+  
 </head>
 <body>
+  <input type="text" id="search"></input>
+  <div id="searchCount"></div>
   <textarea id="textarea"></textarea>
   <div id="valueCount"></div>
-  <div id='output' v-html='input | marked'></div>
-  <a href="md.html">Mark Down</a>
+
 </body>
 </html>
