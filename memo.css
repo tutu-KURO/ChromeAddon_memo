@@ -1,9 +1,15 @@
 #textarea{
+  clear: both;  
   min-width: 400px;
   min-height: 220px;
-
   font-size: 1.15rem;
-
+  
+  padding: 0.5em 1em;
+  margin: 2em 0;
+  border: solid 3px #000000;
+}
+#search , #searchCount{
+  float: left;
 }
   
 #searchCount{

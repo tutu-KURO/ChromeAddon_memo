@@ -5,15 +5,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const valueCount = document.getElementById("valueCount");
 
   
-
-
   chrome.storage.sync.get("key", function (value) {
-    textarea.value = value.key;
+    textarea.innerHTML = value.key;
   });
 
   function saveChanges() {
     let theValue = textarea.value;
-    chrome.storage.sync.set({ 'key': theValue }, function () {
+
+    chrome.storage.sync.set({ 'key': textarea.innerHTML }, function () {
     });
   }
 
@@ -21,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!search.value.replace(/\s/g, "")) {
       return 0;
     } else {
-      let theValue = textarea.value;
+      let theValue = textarea.innerHTML;
       let reg = new RegExp(search.value, 'gi');
       let count = (theValue.match(reg) || []).length;
       
@@ -43,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
   textarea.addEventListener("keyup", function () {
     saveChanges();
     textSearchCount();
-    let count = this.value.replace(/\s/g, "").length;
+    let count = textarea.innerText.replace(/\s/g, "").length;
     valueCount.innerHTML = count + " 文字";
   }, false)
 
