@@ -9,9 +9,14 @@
   border: solid 3px #000000;
 }
 #search , #searchCount{
+  margin:  5px;
   float: left;
 }
-  
+#filename , #textSaveButton{
+  margin: 10px;
+  float: left;
+}
+
 #searchCount{
   font-size: 150%;
 }

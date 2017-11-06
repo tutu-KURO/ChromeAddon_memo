@@ -1,215 +1,106 @@
-/**
- * Search Engine Keyword Highlight.
- *
- * This module can be imported by any HTML page, and it would analyse the
- * referrer for search engine keywords, and then highlight those keywords on
- * the page, by wrapping them around <span class="hilite">...</span> tags.
- * Document can then define styles else where to provide visual feedbacks.
- *
- * Usage:
- *
- *   In HTML. Add the following line towards the end of the document.
- *
- *     <script type="text/javascript" src="se_hilite.js"></script>
- *
- *   In CSS, define the following style:
- *
- *     .hilite { background-color: #ff0; }
- *
- *   If Hilite.style_name_suffix is true, then define the follow styles:
- *
- *     .hilite1 { background-color: #ff0; }
- *     .hilite2 { background-color: #f0f; }
- *     .hilite3 { background-color: #0ff; }
- *     .hilite4 ...
- *
- * @author Scott Yang <http://scott.yang.id.au/>
- * @version 1.2
- */
+/* New from Rob Nitti, who credits
+* http://bytes.com/groups/javascript/145532-replace-french-characters-form-inp
+* The code finds accented vowels and replaces them with their unaccented version. */
+function stripVowelAccent(str)
+{
+var rExps=[ /[\xC0-\xC2]/g, /[\xE0-\xE2]/g,
+/[\xC8-\xCA]/g, /[\xE8-\xEB]/g,
+/[\xCC-\xCE]/g, /[\xEC-\xEE]/g,
+/[\xD2-\xD4]/g, /[\xF2-\xF4]/g,
+/[\xD9-\xDB]/g, /[\xF9-\xFB]/g ];
 
-// Configuration:
-Hilite = {
-  /**
-   * Whether we are matching an exact word. For example, searching for
-   * "highlight" will only match "highlight" but not "highlighting" if exact
-   * is set to true.
-   */
-  exact: true,
+var repChar=['A','a','E','e','I','i','O','o','U','u'];
 
-  /**
-   * Whether to automatically hilite a section of the HTML document, by
-   * binding the "Hilite.hilite()" to window.onload() event. If this
-   * attribute is set to false, you can still manually trigger the hilite by
-   * calling Hilite.hilite() in Javascript after document has been fully
-   * loaded.
-   */
-  onload: true,
+for(var i=0; i<rExps.length; ++i)
+str=str.replace(rExps[i],repChar[i]);
 
-  /**
-   * Name of the style to be used. Default to 'hilite'.
-   */
-  style_name: 'hilite',
-  
-  /**
-   * Whether to use different style names for different search keywords by
-   * appending a number starting from 1, i.e. hilite1, hilite2, etc.
-   */
-  style_name_suffix: true,
+return str;
+}
 
-  /**
-   * Set it to override the document.referrer string. Used for debugging
-   * only.
-   */
-  debug_referrer: ''
-};
+/* Modification of */
+/* http://www.kryogenix.org/code/browser/searchhi/ */
+/* See: */
+/* http://www.tedpavlic.com/post_highlighting_search_results_with_ted_searchhi_javascript.php */
+/* http://www.tedpavlic.com/post_inpage_highlighting_example.php */
+/* for additional modifications of this base code. */
+function highlightWord(node,word,doc) {
+doc = typeof(doc) != 'undefined' ? doc : document;
+// Iterate into this nodes childNodes
+if (node.hasChildNodes) {
+var hi_cn;
+for (hi_cn=0;hi_cn<node.childNodes.length;hi_cn++) {
+highlightWord(node.childNodes[hi_cn],word,doc);
+}
+}
 
-/**
-* Decode the referrer string and return a list of search keywords.
-*/
-Hilite.decodeReferrer = function(referrer) {
-  referrer = decodeURIComponent(referrer);
-  var query = null;
+// And do this node itself
+if (node.nodeType == 3) { // text node
+tempNodeVal = stripVowelAccent(node.nodeValue.toLowerCase());
+tempWordVal = stripVowelAccent(word.toLowerCase());
+if (tempNodeVal.indexOf(tempWordVal) != -1) {
+pn = node.parentNode;
+if (pn.className != "searchword") {
+// word has not already been highlighted!
+nv = node.nodeValue;
+ni = tempNodeVal.indexOf(tempWordVal);
+// Create a load of replacement nodes
+before = doc.createTextNode(nv.substr(0,ni));
+docWordVal = nv.substr(ni,word.length);
+after = doc.createTextNode(nv.substr(ni+word.length));
+hiwordtext = doc.createTextNode(docWordVal);
+hiword = doc.createElement("span");
+hiword.className = "searchword";
+hiword.appendChild(hiwordtext);
+pn.insertBefore(before,node);
+pn.insertBefore(hiword,node);
+pn.insertBefore(after,node);
+pn.removeChild(node);
+}
+}
+}
+}
 
-  if (referrer.match(/^http:\/\/(www\.)?alltheweb.*/i)) {
-// AllTheWeb
-if (referrer.match(/q=/))
-    query = referrer.replace(/^.*q=([^&]+)&?.*$/i, '$1');
-  } else if (referrer.match(/^http:\/\/(www)?\.?google.*/i)) {
-// Google
-if (referrer.match(/q=/))
-    query = referrer.replace(/^.*q=([^&]+)&?.*$/i, '$1');
-  } else if (referrer.match(/^http:\/\/search\.lycos.*/i)) {
-// Lycos
-if (referrer.match(/query=/))
-    query = referrer.replace(/^.*query=([^&]+)&?.*$/i, '$1');
-  } else if (referrer.match(/^http:\/\/search\.msn.*/i)) {
-// MSN
-if (referrer.match(/q=/))
-    query = referrer.replace(/^.*p=([^&]+)&?.*$/i, '$1');
-  } else if (referrer.match(/^http:\/\/search\.yahoo.*/i)) {
-// Yahoo
-if (referrer.match(/p=/))
-    query = referrer.replace(/^.*p=([^&]+)&?.*$/i, '$1');
-  }
+function unhighlight(node) {
+// Iterate into this nodes childNodes
+if (node.hasChildNodes) {
+var hi_cn;
+for (hi_cn=0;hi_cn<node.childNodes.length;hi_cn++) {
+unhighlight(node.childNodes[hi_cn]);
+}
+}
 
-  if (query) {
-query = query.replace(/\'|"/, '');
-query = query.split(/[\s,\+\.]+/);
-  }
+// And do this node itself
+if (node.nodeType == 3) { // text node
+pn = node.parentNode;
+if( pn.className == "searchword" ) {
+prevSib = pn.previousSibling;
+nextSib = pn.nextSibling;
+nextSib.nodeValue = prevSib.nodeValue + node.nodeValue + nextSib.nodeValue;
+prevSib.nodeValue = '';
+node.nodeValue = '';
+}
+}
+}
 
-  return query;
-};
-
-/**
-* Highlight a HTML string with a list of keywords.
-*/
-Hilite.hiliteHTML = function(html, query) {
-  var re = new Array();
-  for (var i = 0; i < query.length; i ++) {
-      query[i] = query[i].toLowerCase();
-      if (Hilite.exact)
-          re.push('\\b'+query[i]+'\\b');
-      else
-          re.push(query[i]);
-  }
-
-  re = new RegExp('('+re.join("|")+')', "gi");
-
-  var subs;
-  if (navigator.userAgent.search(/Safari/) >= 0 || 
-      !Hilite.style_name_suffix) 
-  {
-      subs = '<span class="'+Hilite.style_name+
-          (Hilite.style_name_suffix?'1':'')+'">$1</span>'
-  } else {
-      var stylemapper = {};
-      for (var i = 0; i < query.length; i ++)
-          stylemapper[query[i]] = Hilite.style_name+(i+1);
-      subs = function(match) {
-          return '<span class="'+stylemapper[match.toLowerCase()]+'">'+match+
-              '</span>';
-      };
-  }
-
-  var last = 0;
-  var tag = '<';
-  var skip = false;
-  var skipre = new RegExp('^(script|style|textarea)', 'gi');
-  var part = null;
-  var result = '';
-
-  while (last >= 0) {
-      var pos = html.indexOf(tag, last);
-      if (pos < 0) {
-          part = html.substring(last);
-    last = -1;
-      } else {
-          part = html.substring(last, pos);
-          last = pos+1;
-      }
-
-      if (tag == '<') {
-          if (!skip)
-              part = part.replace(re, subs);
-          else
-              skip = false;
-      } else if (part.match(skipre)) {
-          skip = true;
-      }
-
-      result += part + (pos < 0 ? '' : tag);
-      tag = tag == '<' ? '>' : '<';
-  }
-
-  return result;
-};
-
-/**
-* Highlight a DOM element with a list of keywords.
-*/
-Hilite.hiliteElement = function(elm, query) {
-  if (!query)
-return;
-
-  var oldhtml = elm.innerHTML;
-  var newhtml = Hilite.hiliteHTML(oldhtml, query);
-
-  if (oldhtml != newhtml)
-      elm.innerHTML = newhtml;
-};
-
-/**
-* Highlight a HTML document using keywords extracted from document.referrer.
-* This is the main function to be called to perform search engine highlight
-* on a document.
-*
-* Currently it would check for DOM element 'content', element 'container' and
-* then document.body in that order, so it only highlights appropriate section
-* on WordPress and Movable Type pages.
-*/
-Hilite.hilite = function() {
-  // If 'debug_referrer' then we will use that as our referrer string
-  // instead.
-  var q = Hilite.debug_referrer ? Hilite.debug_referrer : document.referrer;
-  var e = null;
-  q = Hilite.decodeReferrer(q);
-  if (q && ((e = document.getElementById('content')) ||
-            (e = document.getElementById('container')) ||
-            (e = document.body)))
-  {
-Hilite.hiliteElement(e, q);
-  }
-};
-
-// Trigger the highlight using the onload handler.
-if (Hilite.onload) {
-  if (window.onload) {
-Hilite._old_onload = window.onload;
-window.onload = function(ev) {
-    Hilite._old_onload(ev);
-    Hilite.hilite();
-};
-  } else {
-window.onload = Hilite.hilite;
-  }
+function localSearchHighlight(searchStr,doc) {
+doc = typeof(doc) != 'undefined' ? doc : document;
+if (!doc.createElement) return;
+if (searchStr == '') return;
+// Trim leading and trailing spaces after unescaping
+searchstr = unescape(searchStr).replace(/^\s+|\s+$/g, "");
+if( searchStr == '' ) return;
+phrases = searchStr.replace(/\+/g,' ').split(/\"/);
+// Use this next line if you would like to force the script to always
+// search for phrases. See below as well!!!
+//phrases = new Array(); phrases[0] = ''; phrases[1] = searchStr.replace(/\+/g,' ');
+for(p=0;p<phrases.length;p++) {
+phrases[p] = unescape(phrases[p]).replace(/^\s+|\s+$/g, "");
+if( phrases[p] == '' ) continue;
+if( p % 2 == 0 ) words = phrases[p].replace(/([+,()]|%(29|28)|\W+(AND|OR)\W+)/g,' ').split(/\s+/);
+else { words=Array(1); words[0] = phrases[p]; }
+for (w=0;w<words.length;w++) {
+if( words[w] == '' ) continue;
+highlightWord(document.body,words[w],doc);
+}
+}
 }
