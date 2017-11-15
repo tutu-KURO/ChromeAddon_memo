@@ -1,30 +1,34 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const textarea = document.getElementById("textarea");
+  const contentEditable = document.getElementById("contentEditable");
   const search = document.getElementById("search");
   const searchCount = document.getElementById("searchCount");
   const valueCount = document.getElementById("valueCount");
   const textSaveButton = document.getElementById('textSaveButton');
   const filename = document.getElementById('filename');
 
-  function unHighlight(){
-    textarea.innerHTML = textarea.innerHTML.replace(/<span.*?>/g, '').replace(/<\/span>/g, '');
-  };
-
+ 
 
   chrome.storage.sync.get("key", function (value) {
-    textarea.innerHTML = value.key;
+    contentEditable.innerHTML = value.key;
+    textCount();
   });
 
+  
+
+  function unHighlight(){
+    contentEditable.innerHTML = contentEditable.innerHTML.replace(/<span.*?>/g, '').replace(/<\/span>/g, '');
+  };
+
   function saveChanges() {
-    chrome.storage.sync.set({ 'key': textarea.innerHTML }, function () {
+    chrome.storage.sync.set({ 'key': contentEditable.innerHTML }, function () {
     });
   }
 
   function textSearchCount() {
-    if (!search.value.replace(/\s/g, "")) {
+    if(!search.value.replace(/\s/g, "")){
       return 0;
-    } else {
-      let theValue = textarea.innerText;
+    }else{
+      let theValue = contentEditable.innerText;
       let reg = new RegExp(search.value, 'gi');
       let count = (theValue.match(reg) || []).length;
 
@@ -41,13 +45,14 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   function textCount(){
-    let count = textarea.innerText.replace(/\s/g, "").length;
+    let count = contentEditable.innerText.replace(/\s/g, "").length;
     valueCount.innerHTML = count + " 文字";
   };
 
+  //テキストファイルにしてダウンロードする。
   function textSave(){
-    let name = filename.value || 'MemoText'
-    let text = textarea.innerText;
+    let name = filename.value || 'MemoText';
+    let text = contentEditable.innerText;
     let blob = new Blob( [text], {type: 'text/plain'} );
     let a = document.createElement("a");
     a.href =URL.createObjectURL(blob);
@@ -57,19 +62,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     URL.revokeObjectURL(blob);
 
-  }
+  };
 
+  //ボタンをクリック時の処理
   textSaveButton.addEventListener('click',function(){
-    let name = filename.value || 'MemoText'
+    let name = filename.value || 'MemoText';
    if(window.confirm(name + ".text" +"を保存します")){ 
     textSave();
   }else{
       window.alert('キャンセルされました'); 
-  }
+  };
+  });
 
-  })
-
-  
+  // searchエリアが変わったらハイライトを消し、ハイライトをし直す。
+  //サーチして一致した数を返す
   search.addEventListener("change", function () {
     unHighlight();
     let keyword = search.value;
@@ -77,27 +83,28 @@ document.addEventListener("DOMContentLoaded", function () {
     let searchword = document.getElementsByClassName("searchword");
     for (let i = 0; i < searchword.length; i++) {
       searchword[i].style.backgroundColor = "#c9c6c3";
-    }
+    };
     searchCount.innerHTML = textSearchCount() + "箇所一致";
-  })
+  });
 
-  
-  textarea.addEventListener("keyup", function() {
-    textSearchCount();
+  //keyupごとに、テキストカウントとサーチカウント
+  contentEditable.addEventListener("keyup", function() {
     textCount();
   });
 
-  textarea.addEventListener("keydown", function (e) {
+  // escKeyでテキストを保存。
+  contentEditable.addEventListener("keydown", function (e) {
     if(e.keyCode === 27){
       unHighlight();
       saveChanges();
     };
-  }, false)
+  }, false);
 
-  textarea.addEventListener("blur", function () {
+  // blurでテキストを保存。
+  contentEditable.addEventListener("blur", function () {
     unHighlight();
     saveChanges();
-  })
+  });
 
   
 

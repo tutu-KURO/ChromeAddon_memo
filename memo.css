@@ -1,26 +1,42 @@
-#textarea{
+#contentEditable{
   clear: both;  
   min-width: 400px;
   min-height: 220px;
   font-size: 1.15rem;
   
   padding: 0.5em 1em;
-  margin: 2em 0;
+  margin: 10px;
   border: solid 3px #000000;
 }
-#search , #searchCount{
+#search{
   margin:  5px;
   float: left;
+  margin-right: 20px;
 }
-#filename , #textSaveButton{
-  margin: 10px;
-  float: left;
-}
-
 #searchCount{
+  margin-left: 15px;
   font-size: 150%;
 }
+
 #valueCount{
+  margin: 5px;
   text-align: right;
   font-size: 150%;
 }
+
+#filename ,#text{
+  margin: 3px;
+  float: left; 
+}
+#filename{
+  margin-left: 10px;
+}
+#text{
+  font-size: 140%; 
+}
+#textSaveButton{
+  margin: 5px;
+  margin-right: 10px;
+  float: right;
+}
+
