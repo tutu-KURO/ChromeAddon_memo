@@ -2,7 +2,7 @@
   clear: both;  
   min-width: 400px;
   min-height: 220px;
-  font-size: 1.15rem;
+  font-size: 1.8rem;
   
   padding: 0.5em 1em;
   margin: 10px;
@@ -24,19 +24,25 @@
   font-size: 150%;
 }
 
+.form-inline{
+  margin: auto;
+  margin-left: 10px; 
+  margin-right: 10px;
+}
+
 #filename ,#text{
-  margin: 3px;
+  /* margin: 3px; */
   float: left; 
 }
 #filename{
-  margin-left: 10px;
+  /* margin-left: 10px; */
 }
 #text{
   font-size: 140%; 
 }
 #textSaveButton{
-  margin: 5px;
-  margin-right: 10px;
+  /* margin: 3px; */
+  /* margin-right: 10px; */
   float: right;
 }
 

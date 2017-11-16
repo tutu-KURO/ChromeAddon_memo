@@ -6,14 +6,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const textSaveButton = document.getElementById('textSaveButton');
   const filename = document.getElementById('filename');
 
- 
-
   chrome.storage.sync.get("key", function (value) {
     contentEditable.innerHTML = value.key;
     textCount();
   });
-
-  
 
   function unHighlight(){
     contentEditable.innerHTML = contentEditable.innerHTML.replace(/<span.*?>/g, '').replace(/<\/span>/g, '');
@@ -31,15 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
       let theValue = contentEditable.innerText;
       let reg = new RegExp(search.value, 'gi');
       let count = (theValue.match(reg) || []).length;
-
-      // console.log("本文" + theValue);
-      // console.log();
-      // console.log("検索文" + search.value);
-      // console.log();
-      // console.log("正規表現" + reg);
-      // console.log();
-
-      // console.log("カウント" + count)
       return count;
     };
   };
@@ -49,8 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     valueCount.innerHTML = count + " 文字";
   };
 
-  //テキストファイルにしてダウンロードする。
-  function textSave(){
+  function textFileDownload(){
     let name = filename.value || 'MemoText';
     let text = contentEditable.innerText;
     let blob = new Blob( [text], {type: 'text/plain'} );
@@ -59,22 +45,21 @@ document.addEventListener("DOMContentLoaded", function () {
     a.target = "_blank";
     a.download = name + ".text"
     a.click();
-
     URL.revokeObjectURL(blob);
-
   };
 
-  //ボタンをクリック時の処理
+  //ボタンをクリック時のポップアップ
+  //テキストファイルとしてダウンロード
   textSaveButton.addEventListener('click',function(){
     let name = filename.value || 'MemoText';
    if(window.confirm(name + ".text" +"を保存します")){ 
-    textSave();
+    textFileDownload();
   }else{
       window.alert('キャンセルされました'); 
   };
   });
 
-  // searchエリアが変わったらハイライトを消し、ハイライトをし直す。
+  // searchエリアが変わったらハイライトを消し、ハイライトをしなおす
   //サーチして一致した数を返す
   search.addEventListener("change", function () {
     unHighlight();
@@ -92,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     textCount();
   });
 
-  // escKeyでテキストを保存。
+  // escKeyでテキストを保存
   contentEditable.addEventListener("keydown", function (e) {
     if(e.keyCode === 27){
       unHighlight();
@@ -100,13 +85,12 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }, false);
 
-  // blurでテキストを保存。
+  // blurでテキストを保存
   contentEditable.addEventListener("blur", function () {
     unHighlight();
     saveChanges();
   });
 
-  
 
-})
+});
 
