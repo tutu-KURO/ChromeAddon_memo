@@ -27,6 +27,15 @@ document.addEventListener("DOMContentLoaded", function () {
       let theValue = contentEditable.innerText;
       let reg = new RegExp(search.value, 'gi');
       let count = (theValue.match(reg) || []).length;
+
+      console.log("theValue",theValue);
+      console.log();      
+      console.log("search.value",search.value);
+      console.log();
+      console.log("reg",reg);
+      console.log();
+      console.log("count",count);
+    
       return count;
     };
   };
@@ -61,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // searchエリアが変わったらハイライトを消し、ハイライトをしなおす
   //サーチして一致した数を返す
-  search.addEventListener("change", function () {
+  search.addEventListener("keypress", function () {
     unHighlight();
     let keyword = search.value;
     localSearchHighlight(keyword);
@@ -72,9 +81,33 @@ document.addEventListener("DOMContentLoaded", function () {
     searchCount.innerHTML = textSearchCount() + "箇所一致";
   });
 
+  // contentEditable.addEventListener("DOMFocusIn",function(){
+  //   unHighlight();
+  // });
+
+  // const addEventListenerOnce = (target, type, listener) => {
+  //   target.addEventListener(type, function fn() {
+  //     target.removeEventListener(type, fn);
+  //     listener();
+  //   });
+  // };
+  
+  // addEventListenerOnce(contentEditable, 'keyup', () => {
+  //     unHighlight();
+  // });
+
+  contentEditable.addEventListener("DOMFocusIn",function(){
+    contentEditable.addEventListener("keyup",function() {
+      unHighlight();
+      textCount();
+      console.log("HTML",contentEditable.innerHTML);  
+    }, {once:true});
+  })
+
   //keyupごとに、テキストカウントとサーチカウント
-  contentEditable.addEventListener("keyup", function() {
+  contentEditable.addEventListener("keyup",function() {
     textCount();
+    console.log("HTML",contentEditable.innerHTML);  
   });
 
   // escKeyでテキストを保存
@@ -82,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if(e.keyCode === 27){
       unHighlight();
       saveChanges();
+      console.log("HTML",contentEditable.innerHTML);  
     };
   }, false);
 
