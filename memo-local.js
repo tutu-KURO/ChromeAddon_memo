@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const textSaveButton = document.getElementById('textSaveButton');
   const filename = document.getElementById('filename');
 
-  chrome.storage.sync.get("key", function (value) {
+  chrome.storage.local.get("key", function (value) {
     contentEditable.innerHTML = value.key;
     textCount();
   });
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   function saveChanges() {
-    chrome.storage.sync.set({ 'key': contentEditable.innerHTML }, function () {
+    chrome.storage.local.set({ 'key': contentEditable.innerHTML }, function () {
     });
   }
 

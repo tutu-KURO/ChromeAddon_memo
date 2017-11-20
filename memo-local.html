@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <!-- bootstrap  -->
+  <script type="text/javascript" src="memo-local.js"></script>
+  <script type="text/javascript" src="color.js"></script>
+  <link rel="stylesheet" href="bootstrap.css">
+  <link rel="stylesheet" href="memo.css">
+
+  <title>Memo</title>
+</head>
+<body>
+  <a href="memo-sync.html">
+  <a href="memo-local.html">
+  <input type="text" id="search" placeholder="検索" ></input>
+  <div id="searchCount"></div>
+  <div contentEditable="true" id="contentEditable"></div>
+  <div id="valueCount"></div>
+  <form class="form-inline">
+    <div class="form-group">
+      <input type="text" id="filename" placeholder="ファイル名" class="col-xs-4"><p id="text">.text</p></input>
+      <button id="textSaveButton" class="btn btn-primary btn-sm">テキストファイルとして保存</button>
+    </div>
+  </form>
+</body>
+</html>
