@@ -100,7 +100,7 @@ if( p % 2 == 0 ) words = phrases[p].replace(/([+,()]|%(29|28)|\W+(AND|OR)\W+)/g,
 else { words=Array(1); words[0] = phrases[p]; }
 for (w=0;w<words.length;w++) {
 if( words[w] == '' ) continue;
-highlightWord(document.body,words[w],doc);
+highlightWord(document.getElementById("contentEditable"),words[w],doc);
 }
 }
 }

@@ -112,5 +112,8 @@ document.addEventListener("DOMContentLoaded", function () {
     saveChanges();
   });
   
+
+  console.log(document.body)
+
 });
 
