@@ -21,4 +21,23 @@
 #valueCount{
   text-align: right;
   font-size: 150%;
+<<<<<<< HEAD
 }
+=======
+}
+.form-inline{
+  margin: auto;
+  margin-left: 5px; 
+  margin-right: 5px;
+}
+#filename ,#text{
+  float: left; 
+}
+#text{
+  font-size: 100%; 
+}
+#textSaveButton{
+  float: right;
+}
+
+>>>>>>> 4a57b28... update tab
