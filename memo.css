@@ -26,14 +26,14 @@
 }
 .form-inline{
   margin: auto;
-  margin-left: 10px; 
-  margin-right: 10px;
+  margin-left: 5px; 
+  margin-right: 5px;
 }
 #filename ,#text{
   float: left; 
 }
 #text{
-  font-size: 150%; 
+  font-size: 100%; 
 }
 #textSaveButton{
   float: right;
