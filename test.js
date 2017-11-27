@@ -16,16 +16,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function getStorageData() {
 
-    chrome.storage.local.get(['memos', 'currentIdx'], function(pairs) {
+    // chrome.storage.sync.get("key", function (value) {
+    //   //contentEditable.innerHTML = value.key;
+    //   // textCount();
+    // });
+
+    chrome.storage.sync.get(['memos', 'currentIdx'], function(pairs) {
       if(pairs.memos) { 
+        console.log(pairs)
         memos = pairs.memos;
       };
+
       for(var i = 0; i < memos.length; i++) {
         createTab();
-      };
+      }
+
       if(pairs.currentIdx !== undefined) {
         currentIdx = pairs.currentIdx;
-      };
+      }
       selectTab(currentIdx);
     });
 
@@ -39,12 +47,15 @@ document.addEventListener("DOMContentLoaded", function () {
     //date.push(contentEditable.innerHTML);
     if (currentIdx !== null) {
       memos[currentIdx] = contentEditable.innerHTML;
-    };
+    }
 
     console.log("save changes", memos);
-    chrome.storage.local.set({ "memos" : memos }, function() {
+    chrome.storage.sync.set({ "memos" : memos }, function() {
     });
-  };
+
+    /* chrome.storage.sync.set({ "key" : data }, function () {
+    }); */
+  }
 
   function textSearchCount() {
     if (!search.value.replace(/\s/g, "")) {
@@ -91,65 +102,38 @@ document.addEventListener("DOMContentLoaded", function () {
     let tabLen = document.getElementsByClassName("nav-item tab").length;
     let li = document.createElement('li');
     li.className = "nav-item tab";
-    li.id = `tab${tabLen + 1}`;
     let button = document.createElement("button");
     button.id = `tabButton${tabLen + 1}`;
     button.className ="btn btn-primary tabs";
     button.innerHTML = tabLen + 1;
-
-    let deleteButton = document.createElement("button");
-    deleteButton.id = `deleteButton${tabLen + 1}`;
-    deleteButton.className = "btn btn-sm delete"
-    deleteButton.innerHTML = "x";
-
     button.addEventListener('click', (e) => {
       e.preventDefault();
       selectTab(tabLen);
-    });
+    })
 
-    button.appendChild(deleteButton);
     li.appendChild(button);
     memoTab.insertBefore(li,addTab);
 
     while(memos.length < (tabLen + 1)) {
       memos.push("");
     }
-    // saveChanges();
 
-    deleteButton.addEventListener("click",function(){
-      
-      console.log("---")
-      console.log("前",memos)
-      console.log(currentIdx)
-      memos.splice(currentIdx,1);
-      
-      console.log("後",memos)
-  
-      let ul = document.getElementById("memoTab")
-      let li = document.getElementById(`tab${currentIdx + 1}`);
-      
-      ul.removeChild(li);
-
-      saveChanges();
-  
-    });
-
-    saveChanges();
+    saveChanges()
+ 
+    console.log(document.getElementsByClassName("nav-item tab").length);
   }
 
-
-
-  
 
   function selectTab(idx) {
     currentIdx = idx;
     contentEditable.innerHTML = memos[currentIdx];
-    chrome.storage.local.set({ currentIdx: currentIdx });
+    chrome.storage.sync.set({ currentIdx: currentIdx });
   }
 
   addTab.addEventListener("click",function(){
     createTab();
   })
+
 
   //ボタンをクリック時のポップアップ
   //テキストファイルとしてダウンロード

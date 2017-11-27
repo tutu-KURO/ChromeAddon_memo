@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   function saveChanges() {
-    chrome.storage.sync.set({ 'key': contentEditable.innerHTML }, function () {
+    chrome.storage.sync.set({ 'key' : contentEditable.innerHTML }, function () {
     });
   }
 
@@ -27,15 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
       let theValue = contentEditable.innerText;
       let reg = new RegExp(search.value, 'gi');
       let count = (theValue.match(reg) || []).length;
-
-      // console.log("theValue",theValue);
-      // console.log();      
-      // console.log("search.value",search.value);
-      // console.log();
-      // console.log("reg",reg);
-      // console.log();
-      // console.log("count",count);
-    
       return count;
     };
   };
@@ -56,6 +47,16 @@ document.addEventListener("DOMContentLoaded", function () {
     a.click();
     URL.revokeObjectURL(blob);
   };
+
+  // function createTab(){
+  //   var element = document.createElement('li'); 
+  //   element.className = "nav-item"; 
+  //   element.innerHTML = "hogehoge"; 
+  //   element.style.backgroundColor = 'red'; 
+  //   var objBody = document.getElementsByTagName("body").item(0); 
+  //   objBody.appendChild(element); 
+  // }
+
 
   //ボタンをクリック時のポップアップ
   //テキストファイルとしてダウンロード
@@ -82,38 +83,17 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 
-  contentEditable.addEventListener("DOMFocusIn",function(){
-    contentEditable.addEventListener("keyup",function() {
+  contentEditable.addEventListener("focus",function(){
       if(contentEditable.innerHTML.match(/<span.*?>/g).length >=1){
         unHighlight();
       }
-    }, {once:true});
-  })
+  });
 
   //keyupごとに、テキストカウントとサーチカウント
   contentEditable.addEventListener("keyup",function() {
     textCount();
-    saveChanges();
-    console.log("HTML",contentEditable.innerHTML);  
+    saveChanges(); 
   });
-
-  // escKeyでテキストを保存
-  contentEditable.addEventListener("keydown", function (e) {
-    if(e.keyCode === 27){
-      unHighlight();
-      saveChanges();
-      console.log("HTML",contentEditable.innerHTML);  
-    };
-  }, false);
-
-  // blurでテキストを保存
-  contentEditable.addEventListener("blur", function () {
-    unHighlight();
-    saveChanges();
-  });
-  
-
-  console.log(document.body)
 
 });
 

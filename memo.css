@@ -2,12 +2,10 @@
   clear: both;  
   min-width: 400px;
   min-height: 220px;
-  /* font-size: 1.8rem; */
-  font-size: 150%;
-  
+  font-size: 130%;
   padding: 0.5em 1em;
   margin: 10px;
-  border: solid 3px #575757;
+  border: solid 1px #575757;
 }
 #search{
   margin:  5px;
@@ -16,13 +14,13 @@
 }
 #searchCount{
   margin-left: 15px;
-  font-size: 150%;
+  font-size: 130%;
 }
 
 #valueCount{
   margin: 5px;
   text-align: right;
-  font-size: 150%;
+  font-size: 130%;
 }
 .form-inline{
   margin: auto;
