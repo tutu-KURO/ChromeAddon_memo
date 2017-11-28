@@ -14,11 +14,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   getStorageData();
 
-  // chrome.storage.local.clear();
+  // chrome.storage.sync.clear();
 
   function getStorageData() {
 
-    chrome.storage.local.get(['memos', 'currentIdx'], function (pairs) {
+    chrome.storage.sync.get(['memos', 'currentIdx'], function (pairs) {
       if (pairs.memos) {
         memos = pairs.memos;
       };
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
       memos[currentIdx] = contentEditable.innerHTML;
     };
     console.log("save changes", memos);
-    chrome.storage.local.set({ "memos": memos }, function () {
+    chrome.storage.sync.set({ "memos": memos }, function () {
     });
   };
 
@@ -144,9 +144,10 @@ document.addEventListener("DOMContentLoaded", function () {
   function selectTab(idx) {
     currentIdx = idx;
     contentEditable.innerHTML = memos[currentIdx];
-    chrome.storage.local.set({ currentIdx: currentIdx });
+    chrome.storage.sync.set({ currentIdx: currentIdx });
   };
 
+  
   addTab.addEventListener("click", function () {
     createTab();
   });

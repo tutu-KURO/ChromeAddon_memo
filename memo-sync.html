@@ -9,7 +9,7 @@
   <!-- bootstrap  -->
   <!-- <script type="text/javascript" src="memo.js"></script> -->
 
-  <script type="text/javascript" src="test.js"></script>
+  <script type="text/javascript" src="memo-sync.js"></script>
 
   <script type="text/javascript" src="color.js"></script>
   <link rel="stylesheet" href="bootstrap.css">
@@ -19,17 +19,22 @@
 </head>
 
 <body>
+
   <ul class="nav nav-tabs">
     <li class="nav-item" >
-      <a href="memo-sync.html" class="btn btn-primary btn-smdisabled"role="button">SyncMemo</a>
+      <a href="memo-sync.html" class="btn btn-primary btn-sm disabled" role="button">SyncMemo</a>
     </li>
     <li class="nav-item">
       <a href="memo-local.html" class="btn btn-primary btn-sm" role="button">LocalMemo</a>
     </li>
   </ul>
 
-  <ul class="nav nav-tabs" id="memoTab">
+  <ul class="nav nav-tabs" >
+    <li id="memoTab" >
+
+    </li>
     <button id="addTab" class="btn btn-sm">add</button>
+    <button id="deleteTab" class="btn btn-sm">delete</button>
   </ul>
 
   <input type="text" id="search" placeholder="検索"></input>
