@@ -7,7 +7,7 @@
   
   "browser_action": {
     //"default_icon": "",//なんか画像
-    "default_popup": "memo-sync.html",
+    "default_popup": "memo-local.html",
     "default_title": "Memo"
   },
   "permissions": [
