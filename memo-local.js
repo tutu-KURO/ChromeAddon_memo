@@ -113,6 +113,9 @@ document.addEventListener("DOMContentLoaded", function () {
       selectTab(tabLen);
       let nawTab = document.getElementById(`tabButton${currentIdx + 1}`);
       nawTab.classList.add("selecting")
+
+      textCount();
+
     });
     memoTab.appendChild(input);
     memoTab.appendChild(button);
@@ -155,11 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //テキストファイルとしてダウンロード
   textSaveButton.addEventListener('click', function () {
     let name = filename.value || 'MemoText';
-    if (window.confirm(name + ".text" + "を保存します")) {
-      textFileDownload();
-    } else {
-      window.alert('キャンセルされました');
-    };
+    textFileDownload();
   });
 
   // searchエリアが変わったらハイライトを消し、ハイライトをしなおす
