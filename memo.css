@@ -1,29 +1,26 @@
-#textarea{
+#contentEditable{
+  clear: both;  
   min-width: 400px;
   min-height: 220px;
-
-  line-height: 20px;
-  height: 30px;
-
-  background:rgb(255, 246, 211) -webkit-gradient(
-    linear,
-    left top, left bottom,
-    from(rgba(0, 0, 0, 0)),
-    color-stop(0.96, rgba(0, 0, 0, 0)),
-    color-stop(0.98, rgba(0, 0, 0, 0.5)),
-    to(rgba(0, 0, 0, 0))
-    );
-  background-size: auto 2em;
-  font-size: 1rem;
-  line-height: 2rem;
-  overflow: hidden;
+  font-size: 130%;
+  padding: 0.5em 1em;
+  margin: 10px;
+  border: solid 1px #575757;
 }
+#search{
+  margin:  5px;
+  float: left;
+  margin-right: 20px;
+}
+#searchCount{
+  margin-left: 15px;
+  font-size: 130%;
+}
+
 #valueCount{
+  margin: 5px;
   text-align: right;
-  font-size: 150%;
-<<<<<<< HEAD
-}
-=======
+  font-size: 130%;
 }
 .form-inline{
   margin: auto;
@@ -40,4 +37,27 @@
   float: right;
 }
 
->>>>>>> 4a57b28... update tab
+
+
+.btn.btn-secondary.tabs {
+  background-color: #e0e0e0;      /*タブの(非選択状態の)背景色：灰色*/
+}
+
+.btn.btn-secondary.tabs.selecting{
+  background-color: #428bca;
+}
+
+/* ▼タブにマウスポインタが載った際の装飾 */
+.btn.btn-secondary.tabs:hover {
+  color: rgb(0, 0, 0);                /* タブの文字色：緑色 */
+  background-color: #80e7f5;   /* タブの背景色：淡い緑色 */
+  cursor: pointer;             /* マウスポインタの形状を「指(指し示す形)」にする */
+}
+
+/* ▼選択状態のタブ(＝チェックが入っているラジオボタンの隣にあるタブの装飾) */
+input:checked + .btn.btn-secondary.tabs {
+  color: red;                  /* タブの文字色：赤色 */
+  background-color: #ffffcc;   /* タブの背景色：淡い黄色 */
+}
+
+.nav.nav-tabs input { display: none; }
