@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const search = document.getElementById("search");
   const searchCount = document.getElementById("searchCount");
   const valueCount = document.getElementById("valueCount");
-  const textSaveButton = document.getElementById('textSaveButton');
-  const filename = document.getElementById('filename');
+  const textSaveButton = document.getElementById("textSaveButton");
+  const filename = document.getElementById("filename");
   const addTab = document.getElementById("addTab");
   const deleteTab = document.getElementById("deleteTab");
 
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function getStorageData() {
 
-    chrome.storage.local.get(['memos', 'currentIdx'], function (pairs) {
+    chrome.storage.local.get(["memos", "currentIdx"], function (pairs) {
       if (pairs.memos) {
         memos = pairs.memos;
       };
@@ -34,11 +34,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function unHighlight() {
-    contentEditable.innerHTML = contentEditable.innerHTML.replace(/<span.*?>/g, '').replace(/<\/span>/g, '');
+    contentEditable.innerHTML = contentEditable.innerHTML.replace(/<span.*?>/g, "").replace(/<\/span>/g, "");
   };
 
   function saveChanges() {
-    //date.push(contentEditable.innerHTML);
     if (currentIdx !== null) {
       memos[currentIdx] = contentEditable.innerHTML;
     };
@@ -52,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return 0;
     } else {
       let theValue = contentEditable.innerText;
-      let reg = new RegExp(search.value, 'gi');
+      let reg = new RegExp(search.value, "gi");
       let count = (theValue.match(reg) || []).length;
 
       // console.log("theValue",theValue);
@@ -73,9 +72,9 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   function textFileDownload() {
-    let name = filename.value || 'MemoText';
+    let name = filename.value || "MemoText";
     let text = contentEditable.innerText;
-    let blob = new Blob([text], { type: 'text/plain' });
+    let blob = new Blob([text], { type: "text/plain" });
     let a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.target = "_blank";
@@ -85,12 +84,11 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
 
-
   function createTab() {
     let memoTab = document.getElementById("memoTab");
     let addTab = document.getElementById("addTab");
     let tabLen = document.getElementsByClassName("btn btn-secondary tabs").length;
-    let li = document.createElement('li');
+    let li = document.createElement("li");
     li.className = "nav-item tab ";
     li.id = `tab${tabLen + 1}`;
 
@@ -104,12 +102,13 @@ document.addEventListener("DOMContentLoaded", function () {
     button.className = "btn btn-secondary tabs";
     button.innerHTML = tabLen + 1;
 
-    button.addEventListener('click', (e) => {
+    button.addEventListener("click", (e) => {
       let tabs = document.getElementsByClassName("tabs");
       for (let i = 0; tabs.length > i; i++) {
         tabs[i].classList.remove("selecting");
       };
       e.preventDefault();
+
       selectTab(tabLen);
       let nawTab = document.getElementById(`tabButton${currentIdx + 1}`);
       nawTab.classList.add("selecting")
@@ -154,10 +153,9 @@ document.addEventListener("DOMContentLoaded", function () {
     createTab();
   });
 
-  //ボタンをクリック時のポップアップ
   //テキストファイルとしてダウンロード
-  textSaveButton.addEventListener('click', function () {
-    let name = filename.value || 'MemoText';
+  textSaveButton.addEventListener("click", function () {
+    let name = filename.value || "MemoText";
     textFileDownload();
   });
 
@@ -176,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   contentEditable.addEventListener("focus", function () {
-    if (contentEditable.querySelectorAll('span').length >= 1) {
+    if (contentEditable.querySelectorAll("span").length >= 1) {
       unHighlight();
     }
   });
