@@ -40,24 +40,24 @@
 
 
 .btn.btn-secondary.tabs {
-  background-color: #e0e0e0;      /*タブの(非選択状態の)背景色：灰色*/
+  background-color: #e0e0e0;      /*タブ　非選択状態　背景色：灰色*/
 }
 
 .btn.btn-secondary.tabs.selecting{
   background-color: #428bca;
 }
 
-/* ▼タブにマウスポインタが載った際の装飾 */
+/* タブにマウスポインタが載った際の動き */
 .btn.btn-secondary.tabs:hover {
-  color: rgb(0, 0, 0);                /* タブの文字色：緑色 */
-  background-color: #80e7f5;   /* タブの背景色：淡い緑色 */
-  cursor: pointer;             /* マウスポインタの形状を「指(指し示す形)」にする */
+  color: rgb(0, 0, 0);            
+  background-color: #80e7f5;   
+  cursor: pointer;             
 }
 
-/* ▼選択状態のタブ(＝チェックが入っているラジオボタンの隣にあるタブの装飾) */
+/* 選択状態のタブ */
 input:checked + .btn.btn-secondary.tabs {
-  color: red;                  /* タブの文字色：赤色 */
-  background-color: #ffffcc;   /* タブの背景色：淡い黄色 */
+  color: red;                  /* タブの文字色*/
+  background-color: #ffffcc;   /* タブの背景色 */
 }
 
 .nav.nav-tabs input { display: none; }
